@@ -1,0 +1,29 @@
+Bison language parser
+This question is inspired by a 1976 article writ- ten in Dr. Dobb’s Journal. The article in question presents a small language called “Tiny Basic,” which is a stripped-down version of the BASIC program- ming language. The following is a slightly modified version of the grammar presented in the above cited article:
+program ::= (line)+
+line ::= number statement CR | statement CR
+statement ::= PRINT expr-list
+              IF expression RELOP expression THEN statement
+              GOTO expression
+              INPUT var-list
+              LET VAR = expression
+              GOSUB expression
+              RETURN
+              CLEAR
+              LIST
+RUN END
+expr-list ::= (STRING|expression) (COMMA (STRING|expression) )*
+var-list ::= VAR (COMMA VAR)*
+expression ::= PLUMIN term (PLUMIN term)*
+term ::= factor (MULDIV factor)*
+factor ::= VAR | number | LPAREN expression RPAREN
+number ::= DIGIT+
+Write a Bison grammar that will accept the Tiny Basic language. The capitalized words are the tokens that your scanner from the previous question will accept. The lowercase words are non-terminal symbols. You’ll notice that the grammar above is written in BNF. Because Bison does not accept BNF grammars, you will need to rewrite it as a non-BNF grammar.
+Using your Bison grammar and Flex scanner from the previous question, generate a C program that correctly parses the above language and outputs whether the parsing succeeded or failed. Your parser is only checking for well- formedness—it should not concern itself with semantics, and is therefore not
+￼expected to perform any actual computation beyond accepting or rejecting syntax.
+Bison doesn’t support BNF grammars. Therefore in formulating your solu- tion, you will need to convert the grammar from BNF form to non-BNF. For example, a BNF production:
+x ::= y*
+might be expressed in Bison as:
+x : /* epsilon */ |yx
+;
+Note: the absence of anything on the right hand side denotes an ǫ-transition. The comments are disregarded by Bison. Try to use ǫ transitions sparingly as they tend to give rise to reduce/reduce errors.
