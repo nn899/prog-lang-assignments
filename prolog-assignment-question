@@ -1,0 +1,24 @@
+1. Create a number of Twitter users by stating several user(U) facts, where U is the user’s name. Note that all Twitter user names begin with the character @.
+2. The relation follows(X,Y) establishes that user “X follows user Y .” Note that this relation is not symmetric. Relate the above users by specifying several follows facts.
+3. The relation tweet(U,I,M) represents a tweet broadcast by user U with unique identifier I and message M. The identifier is needed because the same user could tweet the same message twice, but this is considered 2 distinct tweets. We can represent the message M as an array of atoms. We will not concern ourselves with the 140 character limit, nor the length of the array, for this assignment. Create several tweet facts.
+4. Create a Prolog relation retweet(U,I) which represents user U retweeting the tweet identified by I.
+5. CreateaPrologrelationfeedhelper(U,F,M,I)whichestablishesuserU’s Twitter feed. F is any user who U follows, M is any message tweeted or retweeted by F and I is a unique tweet identifier.
+Note that if one queries feedhelper by instantiating U to a concrete value, Prolog may output identical instantiations (i.e., bind M,I to the same values more than once), effectively causing duplicate tweets to appear in the feed. This could happen for several reasons, such as if two users f1, f2 ∈ F both retweet the same tweet. It is not necessary to worry about duplicate results for now—we will resolve this in the next step.
+6. Now we define Prolog relation feed(U,M) as follows: feed(U,M) :- uniquefeed(U,O),remove_ident(O,M).
+   uniquefeed(U,R) :- setof([I,F|M],feedhelper(U,F,M,I),R).
+   remove_ident([],[]).
+   remove_ident([[_|Y]|T1],[H2|T2]) :- Y=H2,remove_ident(T1,T2).
+   Read the code above and explain in more detail what each rule does. Note: operator = performs unification, setof(X,Y,Z) places items X satisfying goal Y into a set named Z, and [I,F|M] means “the list beginning with atom I followed by atom F, and tail M.”
+7. Create a Prolog relation search(K,U,M) which searches the universe of
+tweets for the keyword K . Variables U and M , when uninstantiated, will be bound to each tweet sent by user U whose message is M. For this homework, we will limit searches to single atoms so that finding a particular keyword (i.e., atom) within a tweet amounts to searching the tweet’s array of atoms for a match.
+8. CreateaPrologrelationdm(X,Y,I,M)whichsendsadirectmessageuniquely identified by I between users X and Y . Create a number of facts using dm.
+9. Create a Prolog relation inbox(S,R,I,M) which represents the inbox of user R (receiver) containing direct messages (identified by I) sent by S (sender). Recall that user R must follow S for a direct message to show up in the inbox of R.
+10. A tweet j is viral (as far as this homework is concerned) if there exists a sequence of users u1, . . . , un(n ≥ 2) such that:
+• u1 follows u2.
+• forall 1<i<n:ui followsui+1 and ui retweets j.
+• un tweets j.
+Create a Prolog relation isviral(S,I,R), where I is the unique identifier ofatweet,S=un andR=u1.
+11. Create a Prolog relation isviral(S,I,R,M), where I is viral and at least M transitive follows relations (beginning from R and terminating at S) exist. When the above relation holds, we say that a tweet is viral with at least M levels of indirection.
+12. Create your own Prolog relation that makes non-trivial use of the items above. Also briefly describe the relation in English.
+
+
