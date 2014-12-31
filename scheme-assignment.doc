@@ -1,0 +1,36 @@
+1. Implement a function findindex which takes a list and an atom and returns a list of all indexes where the atom is present in the list. If the atom doesn’t exist, findindex should return -1. Examples:
+     >(findindex ’(1 2 4 3 2 5 3 7 2) 3)
+     (3 6)
+     >(findindex ’(1 2 4 3 2 5 3 7 2) 2)
+     (1 4 8)
+     >(findindex ’(1 2 4 3 2 5 3 7 2) 6)
+     (-1)
+2. Implement a function findrangeindex which takes a list, l0 , . . . , ln , a unary function f , and an atom x. It should return a list such that each item i in the output list satisfies f(li) = x. Examples:
+     >(define (inc x) (+ x 1))
+     >(findindex ’(1 2 4 3 2 5 3 7 2) inc 3)
+     (1 4 8)
+     >(findindex ’(1 2 4 3 2 5 3 7 2) inc 2)
+     (0)
+3. Define a function intersection which, given two lists as input, return a list representing the set intersection of the lists. Examples:
+     >  (intersection ’(2) ’(2))
+     (2)
+     >  (intersection ’(2) ’(1))
+     ()
+     >  (intersection ’(1 2) ’(1))
+     (1)
+     >  (intersection ’(2 1 2) ’((1) 2))
+     (2)
+
+4. Write a function compose which is defined to perform the same function as in slide 29 of the Subprogram lecture. That is, it should return a function that, when invoked and supplied an argument, will execute the function composition with the argument as input. For example, (compose inc inc) should evaluate to #<procedure>, whereas (compose inc inc) 5 should evaluate to 7.
+5. A well-known function among the functional languages is map. This function accepts a unary function f and list l1,...,ln as inputs and evaluates to a new list f(l1),...,f(ln). Write a similar functionmap2 which accepts a list j1, . . . , jn, another list l1, . . . , ln (note they are of equal length), a unary predicate p and a unary function f. It should evaluate to an n element list which, for all 1 ≤ i ≤ n, yields f(li) if p(ji) holds, or li otherwise. Example:
+(map2 ’(1 2 3 4) ’(2 3 4 5) (lambda (x) (> x 2)) inc)
+should yield: (2 3 5 6). Additionally, your solution should evaluate to an error message (i.e., a string)
+if the two lists are not of the same size.
+6. Write a function skip which behaves as follows:
+  > ((skip 0) ’foo)
+  foo
+  > (((skip 1) ’foo) ’bar)
+  bar
+  > ((((skip 2) ’foo) ’bar) ’baz)
+  baz
+Your solution doesn’t have to handle other cases (e.g. ((((skip 1) ’foo) ’bar) ’baz)).
