@@ -1,0 +1,57 @@
+Question 1
+Implement a multi-level priority queue using a list that contains all the elements of all queues. Each element is a triple consisting of: its priority, the level of the queue it belongs to, and the data item. Priorities and levels are represented as integer numbers:
+   type ’a mlqueue = (int * int * ’a) list
+The first integer is the level, the second is the priority. Smaller numbers represent higher priorities and levels. The list is maintained sorted, such that elements of a queue with level n occur before all the elements of queue with level n + 1. Furthermore, within the same level, elements with higher priorities occur at the front of the list. Using this representation, implement the following functions to support such a data structure:
+(* The maximum level supported by the multi-level queue. *)
+val maxlevel : int
+(* enqueue q l p e = inserts an element e with priority p
+ * at level l in the multi-level queue q. Raise LevelNoExist
+ * if the level doesn’t exist.  *)
+val enqueue : ’a mlqueue -> int -> int -> ’a -> ’a mlqueue
+
+(* dequeue q = a pair containing: the element with highest
+ * priority from the highest-level queue in q; and the
+ * remaining queue.
+ * Raises Empty is the queue is empty. *)
+val dequeue : ’a mlqueue -> ’a * ’a mlqueue
+(* move pred q = moves all elements that satisfy the predicate
+ * pred to a lower level queue within q. *)
+val move : (’a -> bool) -> ’a mlqueue -> ’a mlqueue
+(* atlevel q n = a list of all elements at level n. The list
+ * contains (priority, data item) pairs, and is sorted by
+ * priorities.  Raises LevelNoExist if level n does not
+ * exist.  If no elements exist at a particular level,
+ * the function should output an empty list. *)
+val atlevel : ’a mlqueue -> int -> (int * ’a) list
+(* lookup pred  q = looks up the first element in q that
+ * satisfies pred, and returns its level and priority.
+ * Raises NotFound if no such element exists. *)
+val lookup : (’a -> bool) -> ’a mlqueue -> int * int
+(* isempty q = true iff the queue q contains no elements. *)
+val isempty : ’a mlqueue -> bool
+(* flatten q = outputs the contents of the entire mlqueue
+ * as a list. *)
+flatten : ’a mlqueue -> ’a list
+
+Question 2 - Encapsulation and Information Hiding
+
+This section should be completed after the November 10th lecture, after all of the above code has been fully implemented.
+Like many other languages, ML provides facilities for modularization, using signatures and structures. Encapsulation is achieved by placing all related functions and types into a single module. Information is exposed to the outside world by placing it in the signature. Additionally, a signature may impose a narrower type definition in the signature than it might in the structure.
+Using these modularization constructs, execute the following:
+• Write a signature called MLPQUEUE. In the signature, declare all of the functions and types discussed in the previous section. In doing so, they will become visible to the outside world.
+• Move all of the previously written code into the structure.
+• Write a functor which allows one to parametrize the maxlevel field of MLPQUEUE to a specified input value.
+• Write a test bed that invokes the library functions. Your code should perform the following actions:
+1. Use the functor above to instantiate a structure with maximum level set to 2 (i.e., 0, 1, 2).
+2. Enqueue the following elements (in the given sequence) in the queue (where q is the queue):
+(a) enqueue q 1 1 2 
+(b) enqueue q 0 0 3 
+(c) enqueue q 2 0 5 
+(d) enqueue q 2 2 1 
+(e) enqueue q 1 0 4 
+(f) enqueue q 2 1 6
+3. Raise an exception when element is enqueued at a level exceeding the maxlevel of the queue.
+4. Move all the elements which are greater than 3 to the next lower level.
+5. Dequeue two elements from the queue.
+6. Query the priority queue for level 1.
+7. Find the first element who’s value is less than 5.
