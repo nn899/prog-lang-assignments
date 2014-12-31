@@ -1,0 +1,53 @@
+1. Write a query that shows who is following a specified user.
+?- follows(X,@alan).
+X = @robert ;
+X = @john.
+
+2. Write a query that shows all tweets posted by a specified user.
+?- tweet(@john,I,M).
+I = t1,
+M = 'hello world' ;
+I = t2,
+M = 'good morning' ; false.
+
+3. Write a query that shows how many users retweeted a specified tweet.
+?- count_user(t11,C).
+C = 4.
+
+4. Write a query that shows a particular user’s feed. Ensure that tweets of
+any users that the user follows are visible in the feed.
+?- feed(@mary,M).
+M = [[@robert|'predicates and clauses'], [@robert|'I am feeling happy'], [@robert|'have a good day'], [@robert|'it is a beautiful day']].
+
+5. Write a query that searches for a keyword in the universe of tweets.
+?- search(good,U,M).
+match found
+U = @alan,
+M = 'good day' ; match found
+U = @john,
+M = 'good morning' ; match found
+U = @robert,
+M = 'have a good day' ; match found
+U = @harry,
+M = 'good night' ; false.
+
+6. Write a query showing the inbox of a particular user, displaying only authorized direct messages.
+?- inbox(X,@john,I,M). // inbox of receiver @john
+X = @mary,
+I = m2,
+M = 'how are you' ; X = @mary,
+I = m8,
+M = 'twitter : scala' ;
+false.
+
+7. Write a query that shows if a particular tweet is viral between the sender and a specified receiver.
+?- isviral(@harry,t12,@john).
+true .
+
+8. Write a query that shows if a particular tweet is viral between the sender and a specified receiver in no less than 3 levels of indirection.
+?- isviral(@harry,t11,@john,3).
+true .
+Answer to question 12 is in the code submitted with brief explanation. The query for usage is:
+?- famous_set(@john,X).
+X = ['hello world'] ;
+X = ['good morning'] ; false.
