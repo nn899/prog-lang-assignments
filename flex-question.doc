@@ -1,0 +1,12 @@
+Flex language scanner - Generate a scanner using flex which recognizes the following tokens:
+1. Keywords: PRINT, IF, THEN, GOTO, INPUT, LET, GOSUB, RETURN, CLEAR, LIST, RUN, END.
+2. CR : newline/carriage return (\n\r on Windows, \r on Mac and Unix)
+3. RELOP:anyoneof<>=
+4. DIGIT : any digit from 0 to 9
+5. MULDIV:*or/
+6. PLUMIN:+or-
+7. VAR : capital letter A through Z. (Just a single letter)
+8. COMMA : ,
+9. STRING : any sequence of letters, numbers, spaces, and underscores, en- closed within double quotes. Example: "_13bl h_6"
+10. LPAREN : (
+11. RPAREN : )
